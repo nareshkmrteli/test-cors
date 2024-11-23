@@ -1,0 +1,32 @@
+server {
+    listen 80;
+    server_name *.local.com;
+
+    location /web/ {
+        alias /home/delhivery/repos/lm/test/test_cors/web/;  # Path to your files
+        autoindex on;  # Optional: Enables directory listing
+        index index.html;  # Default file to serve
+    }
+
+    # Proxy pass to the backend application
+    location / {
+        proxy_pass http://127.0.0.1:8000;  # Replace with your backend URL
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Optional: Serve static files if required
+    location /static/ {
+        alias /home/delhivery/repos/lm/test/test_cors/staticfiles;  # Replace with the actual path
+    }
+
+    location /media/ {
+        alias /path/to/media/files/;  # Replace with the actual path
+    }
+
+    # Logging (optional)
+    access_log /var/log/nginx/test.local.com.access.log;
+    error_log /var/log/nginx/test.local.com.error.log;
+}

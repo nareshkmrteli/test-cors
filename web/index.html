@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test CORS</title>
+    <script>
+        // Function to test the CORS-enabled endpoint
+        function testCORS() {
+            const url = 'http://test.local.com/ping/';
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('output').innerText = `Error: ${error.message}`;
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Test CORS</h1>
+    <p>Click the button below to call the CORS-enabled endpoint.</p>
+    <button onclick="testCORS()">Test CORS</button>
+    <h2>Response:</h2>
+    <pre id="output" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
+</body>
+
+</html>
