@@ -1,5 +1,6 @@
 import os
-
+import logging
+logging.basicConfig(level=logging.DEBUG)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'n=$_a31cbje+n4nt=k5i21&!#hg(lz6s!zb(jqb&p4#xba0h%%'
@@ -23,17 +24,20 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # CORS
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    # Default
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?(.+\.)?local\.com$', )
 
 ROOT_URLCONF = 'test_cors.urls'
 
